@@ -38,3 +38,61 @@ ubuntu@fhm8mc59m2e389m7k275:~$ curl ifconfig.me
 **preemptible = true** - Прерываемая ВМ, может быть выключена провайдером в любой момент или через сутки. При обучении помогает хорошо экономить деньги на балансе.  
 
 **core_fraction=5** - Процент от производительности CPU, так же позволяет сэкономить, когда не требуется высокая проиизводительность от машины.
+
+ ### Задание 2    
+```
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+user@study:~/home_work/ter-homeworks/02/src$
+```
+Новые переменные:
+```hcl
+###new vars
+variable "vm_web_name" {
+  type = string
+  default = "netology-develop-platform-web"
+  }
+
+variable "vm_web_image" {
+  type = string
+  default = "ubuntu-2004-lts"
+}
+
+variable "vm_web_platform_id" {
+  type = string
+  default = "standard-v1"
+  }
+
+variable "vm_web_cores" {
+  type = number
+  default = 2
+  }
+
+variable "vm_web_memory" {
+    type = number
+    default = 1  
+  }
+
+variable "vm_web_fract" {
+    type = number
+    default = 5
+  }
+
+variable "vm_web_prmt" {
+  type = bool
+  default = true
+  }
+
+variable "vm_web_nat" {
+  type = bool
+  default = true
+  }
+
+variable "vm_web_sp" {
+  type = bool
+  default = true
+  }
+```
