@@ -96,3 +96,143 @@ variable "vm_web_sp" {
   default = true
   }
 ```
+### Задание 3   
+![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/eb0fd37e-01d8-408f-a547-d3ef23156632)   
+main.tf:   
+```hcl
+resource "yandex_vpc_network" "develop" {
+  name = var.vpc_name
+}
+resource "yandex_vpc_subnet" "develop" {
+  name           = var.vpc_name
+  zone           = var.default_zone
+  network_id     = yandex_vpc_network.develop.id
+  v4_cidr_blocks = var.default_cidr
+}
+resource "yandex_vpc_subnet" "develop2" {
+  name           = var.vm_db_vpc_name
+  zone           = var.vm_db_zone
+  network_id     = yandex_vpc_network.develop.id
+  v4_cidr_blocks = var.vm_db_cidr
+}
+
+
+
+data "yandex_compute_image" "ubuntu" {
+  family = var.vm_web_image 
+}
+resource "yandex_compute_instance" "platform" {
+  name        = var.vm_web_name 
+  platform_id = var.vm_web_platform_id
+  resources {
+    cores         = var.vm_web_cores
+    memory        = var.vm_web_memory
+    core_fraction = var.vm_web_fract
+  }
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu.image_id
+    }
+  }
+  scheduling_policy {
+    preemptible = var.vm_web_prmt
+  }
+  network_interface {
+    subnet_id = yandex_vpc_subnet.develop.id
+    nat       = var.vm_web_nat
+  }
+
+  metadata = {
+    serial-port-enable = var.vm_web_sp
+    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+  }
+
+}
+###netology-develop-platform-db
+resource "yandex_compute_instance" "platform2" {
+  name        = var.vm_db_name 
+  platform_id = var.vm_db_platform_id
+  zone           = var.vm_db_zone
+
+  resources {
+    cores         = var.vm_db_cores
+    memory        = var.vm_db_memory
+    core_fraction = var.vm_db_fract
+  }
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu.image_id
+    }
+  }
+  scheduling_policy {
+    preemptible = var.vm_db_prmt
+  }
+  network_interface {
+    subnet_id = yandex_vpc_subnet.develop2.id
+    nat       = var.vm_db_nat
+  }
+
+  metadata = {
+    serial-port-enable = var.vm_db_sp
+    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+  }
+
+}
+```
+vms_platform.tf:   
+```hcl
+###cloud vars
+
+variable "vm_db_zone" {
+  type        = string
+  default     = "ru-central1-b"
+  description = "https://cloud.yandex.ru/docs/overview/concepts/geo-scope"
+}
+variable "vm_db_vpc_name" {
+  type        = string
+  default     = "develop2"
+  description = "VPC network & subnet name"
+}
+variable "vm_db_cidr" {
+  type        = list(string)
+  default     = ["10.0.0.0/24"]
+  description = "https://cloud.yandex.ru/docs/vpc/operations/subnet-create"
+}
+variable "vm_db_name" {
+  type = string
+  default = "netology-develop-platform-db"
+  }
+variable "vm_db_image" {
+  type = string
+  default = "ubuntu-2004-lts"
+}
+variable "vm_db_platform_id" {
+  type = string
+  default = "standard-v1"
+  }
+variable "vm_db_cores" {
+  type = number
+  default = 2
+  }
+variable "vm_db_memory" {
+    type = number
+    default = 2  
+  }
+variable "vm_db_fract" {
+    type = number
+    default = 5
+  }
+variable "vm_db_prmt" {
+  type = bool
+  default = true
+  }
+variable "vm_db_nat" {
+  type = bool
+  default = true
+  }
+
+variable "vm_db_sp" {
+  type = bool
+  default = true
+  }
+```
