@@ -1,5 +1,10 @@
 # ter-homeworks-02
-### Задание 1
+### Задание 1  
+Ошибки:  
+cores         = 1 - платформа не дает установить такое количество ядер, минимум 2 и далее кратное двум.  
+platform_id = "standart-v4" - такой платформы не существует, для standart только v1,v2,v3. 
+service_account_key_file = file("~/.authorized_key.json") - здесь необходимо указать имя файла заданное при формировании iam ключа,так же указать путь куда мы его положили.
+
 ![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/ec424a5a-dd02-4bc7-986f-86b674f927b1)
 
 ```
