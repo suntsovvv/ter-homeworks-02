@@ -236,3 +236,38 @@ variable "vm_db_sp" {
   default = true
   }
 ```
+### Задание 4
+```
+user@study:~/home_work/ter-homeworks/02/src$ terraform output
+all = [
+  {
+    "platform" = [
+      "netology-develop-platform-web",
+      "51.250.78.251",
+      "fhms0l8ngbrocl0lhv6m.auto.internal",
+    ]
+  },
+  {
+    "platform2" = [
+      "netology-develop-platform-db",
+      "158.160.21.114",
+      "epdvrb31gdntfstq81cs.auto.internal",
+    ]
+  },
+]
+```
+
+```hcl
+output "all" {
+  value = [
+    { platform = [
+    yandex_compute_instance.platform.name, yandex_compute_instance.platform.network_interface[0].nat_ip_address,
+    yandex_compute_instance.platform.fqdn]},
+    
+    { platform2 = [
+    yandex_compute_instance.platform2.name, yandex_compute_instance.platform2.network_interface[0].nat_ip_address,
+    yandex_compute_instance.platform2.fqdn]}
+
+]
+  }
+```
