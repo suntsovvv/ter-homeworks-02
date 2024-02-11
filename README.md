@@ -26,4 +26,10 @@ To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
 ubuntu@fhm8mc59m2e389m7k275:~$ curl ifconfig.me
-158.160.53.108ubuntu@fhm8mc59m2e389m7k275:~$ 
+158.160.53.108ubuntu@fhm8mc59m2e389m7k275:~$
+```
+**Ответьте, как в процессе обучения могут пригодиться параметры preemptible = true и core_fraction=5 в параметрах ВМ.**  
+
+**preemptible = true** - Прерываемая ВМ, может быть выключена провайдером в любой момент или через сутки. При обучении помогает хорошо экономить деньги на балансе.  
+
+**core_fraction=5** - Процент от производительности CPU, так же позволяет сэкономить, когда не требуется высокая проиизводительность от машины.
