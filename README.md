@@ -271,3 +271,13 @@ output "all" {
 ]
   }
 ```
+### Задание 5   
+Файл locals.tf:   
+```hcl
+locals {
+  mashine_name1 ="${yandex_vpc_subnet.develop1.zone}-${var.vm_web_name}" 
+  mashine_name2 ="${yandex_vpc_subnet.develop2.zone}-${var.vm_db_name}"
+}
+```
+Результат:   
+![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/9ef7bf0e-2b02-4df8-998d-fc3638fd27d9)
