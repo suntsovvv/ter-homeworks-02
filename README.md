@@ -280,4 +280,25 @@ locals {
 }
 ```
 Результат:   
-![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/9ef7bf0e-2b02-4df8-998d-fc3638fd27d9)
+![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/9ef7bf0e-2b02-4df8-998d-fc3638fd27d9)   
+
+### Задание 6   
+
+1 -   
+
+```hcl
+variable "vms_resources" {
+  default     = {
+      web ={cores ="2",memory ="1",core_fraction ="5"},
+      db = {cores ="2",memory ="2",core_fraction ="5"}     
+  }
+}
+```
+2 -  
+```hcl
+variable "meta" {
+   default = {ssh_key="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDenMAd4hQiqCGq7tq31gEQPMPe1G1mE+Kn4l8qV9dFk user@study",
+              sp_e="1"
+   }
+}
+```
