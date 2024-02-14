@@ -324,3 +324,9 @@ default = {
   }
 }
 ```
+```
+user@study:~/home_work/ter-homeworks/02/src$ terraform console
+> var.test.dev1.ssh_env
+"ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117"
+>
+```
