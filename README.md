@@ -330,3 +330,50 @@ user@study:~/home_work/ter-homeworks/02/src$ terraform console
 "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117"
 >
 ```
+### Задание 9*
+Добавленный код:   
+```hcl
+resource "yandex_vpc_network" "develop" {
+  name = var.vpc_name
+}
+
+resource "yandex_vpc_subnet" "develop1" {
+  folder_id      = var.folder_id
+  name           = var.vpc_web_name
+  v4_cidr_blocks = var.default_cidr
+  zone           = var.default_zone
+  network_id     = yandex_vpc_network.develop.id
+  route_table_id = yandex_vpc_route_table.rt.id
+}
+
+resource "yandex_vpc_subnet" "develop2" {
+ folder_id      = var.folder_id
+  name           = var.vpc_db_name
+  v4_cidr_blocks = var.vm_db_cidr
+  zone           = var.vm_db_zone
+  network_id     = yandex_vpc_network.develop.id
+  route_table_id = yandex_vpc_route_table.rt.id
+}
+
+resource "yandex_vpc_gateway" "nat_gateway" {
+ folder_id      = var.folder_id
+  name = "test-gateway"
+  shared_egress_gateway {}
+}
+
+resource "yandex_vpc_route_table" "rt" {
+ folder_id      = var.folder_id
+  name       = "test-route-table"
+  network_id = yandex_vpc_network.develop.id
+
+  static_route {
+    destination_prefix = "0.0.0.0/0"
+    gateway_id         = yandex_vpc_gateway.nat_gateway.id
+  }
+}
+```
+![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/684cdbc3-0a3a-4e3d-9d19-0a135842113e)
+![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/c29dd125-3f36-459e-a2b7-eb37f54ccbba)
+![image](https://github.com/suntsovvv/ter-homeworks-02/assets/154943765/4ac6b9a1-eca4-4a2a-937b-0030e2565532)
+
+
